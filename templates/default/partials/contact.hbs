@@ -1,0 +1,213 @@
+<section id="contact" class="reveal">
+
+    <div class="container">
+
+        <h2 class="section-title">
+
+            Contact Us
+
+        </h2>
+
+        <p class="section-subtitle">
+
+            We'd love to hear from you.
+
+        </p>
+
+        <div class="row g-5">
+
+            <div class="col-lg-5">
+
+                <div class="contact-info">
+
+                    <div class="contact-item">
+
+                        <i class="bi bi-geo-alt-fill"></i>
+
+                        <div>
+
+                            <h5>Address</h5>
+
+                            <p>
+
+                                {{business.address1}}<br>
+
+                                {{business.address2}}<br>
+
+                                {{business.city}},
+                                {{business.state}}
+                                {{business.pin}}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="contact-item">
+
+                        <i class="bi bi-envelope-fill"></i>
+
+                        <div>
+
+                            <h5>Email</h5>
+
+                            <p>
+
+                                {{contact.email}}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="contact-item">
+
+                        <i class="bi bi-whatsapp"></i>
+
+                        <div>
+
+                            <h5>WhatsApp</h5>
+
+                            <p>
+
+                                {{contact.whatsapp}}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-7">
+
+                <form class="contact-form" id="contact-form">
+
+                    <div class="mb-3">
+
+                        <input
+                            id="contact-name"
+                            type="text"
+                            class="form-control"
+                            placeholder="Your Name" required>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <input
+                            id="contact-email-input"
+                            type="email"
+                            class="form-control"
+                            placeholder="Your Email">
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <textarea
+                            id="contact-message"
+                            type="text"
+                            class="form-control"
+                            rows="6"
+                            placeholder="Your Message" required></textarea>
+
+                    </div>
+
+                    <button
+                        class="btn btn-primary" type="submit">
+
+                        Send Message
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+    
+</section>
+<div
+        class="modal fade"
+        id="contactChoiceModal"
+        tabindex="-1"
+        aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+
+                        Choose Contact Method
+
+                    </h5>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body text-center">
+
+                    <p>
+
+                        How would you like to contact us?
+
+                    </p>
+
+                    <div class="d-grid gap-3">
+
+                        <button
+                            id="contact-email-btn"
+                            class="btn btn-primary">
+
+                            <i class="bi bi-envelope-fill"></i>
+
+                            Email
+
+                        </button>
+
+                        <button
+                            id="contact-whatsapp-btn"
+                            class="btn btn-success">
+
+                            <i class="bi bi-whatsapp"></i>
+
+                            WhatsApp
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <script>
+
+    window.contactConfig = {
+
+        mode: "{{contact.mode}}",
+        email: "{{contact.email}}",
+        whatsapp: "{{contact.whatsapp}}"
+
+    };
+
+    </script>

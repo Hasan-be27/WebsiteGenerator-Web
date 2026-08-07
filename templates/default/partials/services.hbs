@@ -1,0 +1,57 @@
+<section id="services" class="reveal">
+
+    <div class="container">
+
+        <h2 class="section-title">
+
+            Our Services
+
+        </h2>
+
+        <p class="section-subtitle">
+
+            What We Offer
+
+        </p>
+
+        <div class="row g-4">
+
+            {{#each services}}
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card service-card h-100">
+
+                    <div class="card-body">
+
+                        <div class="service-icon">
+
+                            <i class="bi bi-briefcase-fill"></i>
+
+                        </div>
+
+                        <h4>
+
+                            {{title}}
+
+                        </h4>
+
+                        <p>
+
+                            {{description}}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {{/each}}
+
+        </div>
+
+    </div>
+
+</section>

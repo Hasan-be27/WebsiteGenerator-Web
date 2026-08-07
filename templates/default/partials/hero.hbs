@@ -1,0 +1,75 @@
+<section id="hero" class="hero">
+
+    <div class="hero-image">
+
+        <img
+            src="{{hero.image}}"
+            alt="{{hero.title}}">
+
+    </div>
+
+    <div class="hero-overlay"></div>
+
+    <div class="container hero-content">
+
+        <div class="row">
+
+            <div class="col-lg-8">
+
+                <h1 class="hero-title">
+
+                    {{hero.title}}
+
+                </h1>
+
+                {{#if business.type}}
+
+                <p class="hero-business-type">
+
+                    {{business.type}}
+
+                </p>
+
+                {{/if}}
+
+                <p class="hero-tagline">
+
+                    {{hero.tagline}}
+
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a
+                        href="#about"
+                        class="btn btn-primary btn-lg">
+
+                        Learn More
+
+                    </a>
+
+                    <a
+                        href="#contact"
+                        class="btn btn-outline-light btn-lg">
+
+                        Contact Us
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <a
+        href="#about"
+        class="hero-scroll">
+
+        <i class="bi bi-chevron-double-down"></i>
+
+    </a>
+
+</section>
