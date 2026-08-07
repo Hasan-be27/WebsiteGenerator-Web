@@ -135,3 +135,96 @@ ComponentLoader owns:
 Components own:
 
 - Their own DOM
+
+## Current Status
+
+Milestone 2 (Components) is complete.
+
+The application now uses the new locked architecture and all UI components have been successfully migrated from the Electron project into the Web Edition.
+
+The migration focused on reusing existing code wherever possible while removing Electron-specific dependencies.
+
+---
+
+## Completed
+
+### Foundation (M1)
+
+- Project structure established
+- App class
+- Router
+- Component Loader
+- Page system
+- ES Module architecture
+- Bootstrap integrated locally
+- Event-based navigation
+- Base Component class
+
+### Components (M2)
+
+- Home
+- Business Information
+- Hero
+- About
+- Highlight
+- Services
+- Contact
+- Generate Bar
+
+All components now:
+
+- Follow the new Component lifecycle
+- Use ES Modules
+- Are self-contained
+- Have a single root element
+- Load dynamically through ComponentLoader
+- Contain no Electron-specific code
+
+---
+
+## Component Lifecycle
+
+Every component follows:
+
+constructor()
+
+↓
+
+init()
+
+↓
+
+registerEvents()
+
+↓
+
+validate()
+
+↓
+
+getData()
+
+This order is now the project standard.
+
+---
+
+## Architecture
+
+Architecture remains frozen.
+
+No architectural changes have been made since the freeze.
+
+All improvements beyond this point will fit inside the existing architecture.
+
+---
+
+## Next Milestone
+
+M3 — Services
+
+- ValidationService
+- GeneratorService
+- TemplateService
+- StorageService
+- Data collection
+- Component validation

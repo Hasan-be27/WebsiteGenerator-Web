@@ -8,19 +8,22 @@ export default class ComponentLoader {
 
     async load(page) {
 
-        const app = document.getElementById("app");
+        const container = document.getElementById("app");
 
-        app.innerHTML = "";
+        container.innerHTML = "";
 
         for (const component of page.components) {
 
-            await this.loadComponent(component, app);
+            console.log(`Loading component "${component}"...`);
+
+            await this.loadComponent(component, container);
 
         }
 
     }
 
     async loadComponent(componentName, container) {
+        console.group(`Component: ${componentName}`);
 
         this.loadCSS(componentName);
 
@@ -50,11 +53,19 @@ export default class ComponentLoader {
 
             component.init();
 
+
         }
 
         catch (error) {
 
-            console.error(error);
+            console.error(`❌ Component "${componentName}" could not be loaded.`);
+
+            console.error(error.message);
+
+        }
+        finally {
+
+            console.groupEnd();
 
         }
 

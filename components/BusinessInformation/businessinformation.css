@@ -1,0 +1,35 @@
+.component-card{
+    border-radius:14px;
+    overflow:hidden;
+    transition:all .25s ease;
+}
+
+.component-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 .75rem 1.5rem rgba(0,0,0,.08);
+}
+
+.component-header{
+    background:#f8f9fa;
+    border-bottom:1px solid #e9ecef;
+}
+
+.component-header h4{
+    font-weight:700;
+}
+
+.component-header small{
+    font-size:.9rem;
+}
+.form-label{
+    font-weight:600;
+    color:#495057;
+}
+.form-control{
+    border-radius:10px;
+    transition:.2s ease;
+}
+
+.form-control:focus{
+    box-shadow:0 0 0 .2rem rgba(13,110,253,.15);
+}

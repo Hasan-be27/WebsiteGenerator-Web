@@ -1,3 +1,63 @@
-.home{
-    min-height:100vh;
+#home-screen{
+
+    height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+}
+
+.logo{
+
+    width:220px;
+
+    margin-bottom:35px;
+
+}
+
+h1{
+
+    font-weight:700;
+
+    margin-bottom:15px;
+
+}
+
+.subtitle{
+
+    font-size:22px;
+
+    color:#dcdcdc;
+
+    margin-bottom:8px;
+
+}
+
+.description{
+
+    color:#8f8f8f;
+
+    margin-bottom:40px;
+
+}
+
+.btn{
+
+    padding:12px 32px;
+
+}
+
+small{
+
+    margin-top:40px;
+
+    color:#777;
+
 }

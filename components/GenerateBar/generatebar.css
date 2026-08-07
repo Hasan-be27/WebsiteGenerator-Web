@@ -1,0 +1,52 @@
+.generate-bar{
+
+    position:fixed;
+
+    left:50%;
+    bottom:24px;
+
+    transform:translateX(-50%);
+
+    width:min(1300px, calc(100vw - 40px));
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 22px;
+
+    border-radius:14px;
+
+    background:rgba(33,37,41,.82);
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.35),
+        inset 0 1px rgba(255,255,255,.05);
+
+    z-index:9999;
+
+}
+
+.generate-status{
+
+    color:#d1d5db;
+
+    font-size:.95rem;
+
+    font-weight:500;
+
+}
+
+#generate-website-btn{
+
+    min-width:210px;
+
+}
+.generate-btn{
+    min-width:220px;
+}

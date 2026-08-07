@@ -1,8 +1,10 @@
-export default class Home {
+import Component from "../../app/Component.js";
+
+export default class Home extends Component {
 
     constructor(element) {
 
-        this.element = element;
+        super(element);
 
     }
 
@@ -10,7 +12,23 @@ export default class Home {
 
         console.log("Home initialized");
 
-        console.log(this.element);
+        this.registerEvents();
+
+    }
+
+    registerEvents() {
+
+        const button = this.$("#new-project");
+
+        if (!button) {
+            return;
+        }
+
+        button.addEventListener("click", () => {
+
+            this.emit("navigate", "/website");
+
+        });
 
     }
 

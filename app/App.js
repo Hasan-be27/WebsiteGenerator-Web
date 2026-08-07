@@ -9,7 +9,7 @@ export default class App {
 
     constructor() {
 
-        this.router = new Router();
+        this.componentLoader = new ComponentLoader();
         this.router = new Router(this.componentLoader);
     }
 
@@ -30,8 +30,18 @@ export default class App {
         console.log("Website Generator Web Started");
 
         this.registerPages();
+        this.registerEvents();
 
         this.router.navigate("/");
+
+    }
+    registerEvents() {
+
+        window.addEventListener("navigate", (event) => {
+
+            this.router.navigate(event.detail);
+
+        });
 
     }
 

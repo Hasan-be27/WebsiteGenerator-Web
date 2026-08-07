@@ -45,5 +45,19 @@ export default class Component {
         this.$(selector).innerHTML = value;
 
     }
+    emit(eventName, detail = null) {
+
+        window.dispatchEvent(
+            new CustomEvent(eventName, {
+                detail
+            })
+        );
+
+    }
+    on(eventName, callback) {
+
+        window.addEventListener(eventName, callback);
+
+    }
 
 }

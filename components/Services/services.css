@@ -1,0 +1,14 @@
+.service-item{
+
+    margin-bottom:20px;
+
+}
+
+.service-item:last-child{
+
+    margin-bottom:0;
+
+}
+.service-remove{
+    margin-top:.5rem;
+}
