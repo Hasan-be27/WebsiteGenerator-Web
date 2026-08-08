@@ -1,4 +1,5 @@
 import Component from "../../app/Component.js";
+import ImageUploader from "../../app/ImageUploader.js";
 
 export default class Hero extends Component {
 
@@ -15,9 +16,19 @@ export default class Hero extends Component {
         this.title = this.$("#hero-title");
         this.tagline = this.$("#hero-tagline");
 
-        this.heroImagebutton = this.$("#hero-image");
-        this.heroPreview = this.$("#hero-preview");
-        this.heroImageName = this.$("#hero-image-name");
+        this.imageUploader =
+            new ImageUploader(this, "hero");
+
+        this.validationService.register(
+            "hero",
+            () => this.validate()
+        );
+
+        this.imageUploader.onChange(() => {
+
+            this.validationService.validate("hero");
+
+        });
 
         this.registerEvents();
 
@@ -25,13 +36,13 @@ export default class Hero extends Component {
 
     registerEvents() {
 
-        // We'll implement image upload in M3
+        // Hero-specific events will go here
 
     }
 
     validate() {
 
-        return true;
+        return this.imageUploader.hasImage();
 
     }
 
@@ -39,7 +50,7 @@ export default class Hero extends Component {
 
         return {
 
-            image: null,
+            image: this.imageUploader.getImage(),
 
             title: this.title.value.trim(),
 

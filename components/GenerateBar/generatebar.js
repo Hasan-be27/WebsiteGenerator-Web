@@ -3,9 +3,7 @@ import Component from "../../app/Component.js";
 export default class GenerateBar extends Component {
 
     constructor(element) {
-
         super(element);
-
     }
 
     init() {
@@ -24,7 +22,7 @@ export default class GenerateBar extends Component {
 
     registerEvents() {
 
-        this.button.addEventListener("click", () => {
+        this.generateButton.addEventListener("click", () => {
 
             console.log("Generate Website clicked");
 
@@ -42,14 +40,46 @@ export default class GenerateBar extends Component {
 
         });
 
+        this.validationService.subscribe(() => {
+
+            this.update();
+
+        });
+
     }
 
     update() {
 
-        this.button.disabled = false;
+        const valid = this.validationService.isValid();
+
+        this.generateButton.disabled = !valid;
+
+        if (valid) {
+
+            this.status.textContent =
+                "✓ All required fields complete";
+
+            return;
+
+        }
+
+        const invalidSections =
+            this.validationService.invalidSections();
+
+        const sectionNames = {
+            "business-information": "Business Information",
+            "hero": "Hero",
+            "about": "About",
+            "services": "Services",
+            "contact": "Contact"
+        };
+
+        const names = invalidSections.map(section =>
+            sectionNames[section] || section
+        );
 
         this.status.textContent =
-            "✓ Framework ready";
+            `⚠ Incomplete: ${names.join(", ")}`;
 
     }
 

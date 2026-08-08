@@ -23,9 +23,35 @@ export default class BusinessInformation extends Component {
 
         this.registerEvents();
 
+        this.validationService.register(
+            "business-information",
+            () => this.validate()
+        );
+        console.log(
+    "BusinessInformation validation:",
+    this.validationService.isValid(),
+    this.validationService.invalidSections()
+);
+
     }
 
     registerEvents() {
+
+        this.name.addEventListener("input", () => {
+
+            this.validationService.validate(
+                "business-information"
+            );
+
+        });
+
+        this.phone.addEventListener("input", () => {
+
+            this.validationService.validate(
+                "business-information"
+            );
+
+        });
 
     }
 

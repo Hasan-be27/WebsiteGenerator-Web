@@ -1,5 +1,7 @@
 export default class ComponentLoader {
-    constructor() {
+    constructor(validationService) {
+
+        this.validationService = validationService;
 
         this.loadedStyles = new Set();
         this.loadedModules = new Map();
@@ -51,6 +53,11 @@ export default class ComponentLoader {
 
             const component = new Component(element);
 
+            component.validationService = this.validationService;
+            console.log(
+                `${componentName} validation service:`,
+                component.validationService
+            );
             component.init();
 
 
@@ -72,27 +79,39 @@ export default class ComponentLoader {
     }
     loadCSS(componentName) {
 
-        const fileName = componentName.toLowerCase();
+    const fileName = componentName.toLowerCase();
 
-        const cssPath = `components/${componentName}/${fileName}.css`;
+    const cssPath =
+        `components/${componentName}/${fileName}.css`;
 
-        if (this.loadedStyles.has(cssPath)) {
+    if (this.loadedStyles.has(cssPath)) {
 
-            return;
-
-        }
-
-        const link = document.createElement("link");
-
-        link.rel = "stylesheet";
-
-        link.href = cssPath;
-
-        document.head.appendChild(link);
-
-        this.loadedStyles.add(cssPath);
+        return;
 
     }
+
+    const link = document.createElement("link");
+
+    link.rel = "stylesheet";
+    link.href = cssPath;
+
+    link.onload = () => {
+
+        console.log(`CSS loaded: ${cssPath}`);
+
+    };
+
+    link.onerror = () => {
+
+        console.error(`❌ CSS failed to load: ${cssPath}`);
+
+    };
+
+    document.head.appendChild(link);
+
+    this.loadedStyles.add(cssPath);
+
+}
     async loadJS(componentName) {
 
         const fileName = componentName.toLowerCase();

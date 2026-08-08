@@ -1,24 +1,36 @@
 import Component from "../../app/Component.js";
+import ImageUploader from "../../app/ImageUploader.js";
 
 export default class About extends Component {
 
     constructor(element) {
-
         super(element);
-
     }
 
     init() {
 
         console.log("About initialized");
+        
 
-        this.heading = this.$("#about-heading");
-        this.description = this.$("#about-description");
+        this.heading =
+            this.$("#about-heading");
 
-        this.aboutImageButton = this.$("#about-image-button");
-        this.aboutImageInput = this.$("#about-image-input");
-        this.aboutImageName = this.$("#about-image-name");
-        this.aboutPreview = this.$("#about-preview");
+        this.description =
+            this.$("#about-description");
+
+        this.imageUploader =
+            new ImageUploader(this, "about");
+
+        this.validationService.register(
+            "about",
+            () => this.validate()
+        );
+
+        this.imageUploader.onChange(() => {
+
+            this.validationService.validate("about");
+
+        });
 
         this.registerEvents();
 
@@ -26,13 +38,17 @@ export default class About extends Component {
 
     registerEvents() {
 
-        // Image upload will be implemented in M3
+        // About-specific events will go here
 
     }
 
     validate() {
 
-        return true;
+        return (
+            this.heading.value.trim() !== "" &&
+            this.description.value.trim() !== "" &&
+            this.imageUploader.hasImage()
+        );
 
     }
 
@@ -41,8 +57,10 @@ export default class About extends Component {
         return {
 
             heading: this.heading.value.trim(),
+
             description: this.description.value.trim(),
-            image: null
+
+            image: this.imageUploader.getImage()
 
         };
 

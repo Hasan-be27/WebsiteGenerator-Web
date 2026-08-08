@@ -17,6 +17,11 @@ export default class Services extends Component {
 
         this.registerEvents();
 
+        this.validationService.register(
+            "services",
+            () => this.validate()
+        );
+
         // Start with one empty service
         this.addService();
 
@@ -106,6 +111,20 @@ export default class Services extends Component {
                 this.renumber();
 
             });
+        const nameInput = service.querySelector(".service-name");
+        const descriptionInput = service.querySelector(".service-description");
+
+        nameInput.addEventListener("input", () => {
+
+            this.validationService.validate("services");
+
+        });
+
+        descriptionInput.addEventListener("input", () => {
+
+            this.validationService.validate("services");
+
+        });
 
         this.list.appendChild(service);
 
@@ -113,7 +132,23 @@ export default class Services extends Component {
 
     validate() {
 
-        return true;
+        if (this.list.children.length === 0) {
+
+            return false;
+
+        }
+
+        return [...this.list.children].some(service => {
+
+            const name =
+                service.querySelector(".service-name").value.trim();
+
+            const description =
+                service.querySelector(".service-description").value.trim();
+
+            return name !== "" && description !== "";
+
+        });
 
     }
 

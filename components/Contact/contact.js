@@ -3,9 +3,7 @@ import Component from "../../app/Component.js";
 export default class Contact extends Component {
 
     constructor(element) {
-
         super(element);
-
     }
 
     init() {
@@ -23,14 +21,32 @@ export default class Contact extends Component {
         this.updateMode();
 
         this.registerEvents();
+        this.validationService.register(
+            "contact",
+            () => this.validate()
+        );
 
     }
 
     registerEvents() {
 
-        this.mode.addEventListener("change", () => {
+        this.contactMode.addEventListener("change", () => {
 
             this.updateMode();
+
+            this.validationService.validate("contact");
+
+        });
+
+        this.contactEmail.addEventListener("input", () => {
+
+            this.validationService.validate("contact");
+
+        });
+
+        this.contactWhatsapp.addEventListener("input", () => {
+
+            this.validationService.validate("contact");
 
         });
 
@@ -38,7 +54,7 @@ export default class Contact extends Component {
 
     updateMode() {
 
-        const mode = this.mode.value;
+        const mode = this.contactMode.value;
 
         this.emailGroup.style.display =
             mode === "email" || mode === "both"
@@ -54,7 +70,33 @@ export default class Contact extends Component {
 
     validate() {
 
-        return true;
+        const mode = this.contactMode.value;
+
+        const emailValid =
+            this.contactEmail.value.trim() !== "";
+
+        const whatsappValid =
+            this.contactWhatsapp.value.trim() !== "";
+
+        if (mode === "email") {
+
+            return emailValid;
+
+        }
+
+        if (mode === "whatsapp") {
+
+            return whatsappValid;
+
+        }
+
+        if (mode === "both") {
+
+            return emailValid && whatsappValid;
+
+        }
+
+        return false;
 
     }
 
@@ -62,11 +104,11 @@ export default class Contact extends Component {
 
         return {
 
-            mode: this.mode.value,
+            mode: this.contactMode.value,
 
-            email: this.email.value.trim(),
+            email: this.contactEmail.value.trim(),
 
-            whatsapp: this.whatsapp.value.trim()
+            whatsapp: this.contactWhatsapp.value.trim()
 
         };
 

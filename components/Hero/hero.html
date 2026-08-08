@@ -23,28 +23,45 @@
 
         </div>
         <div class="mb-4">
-            <label for="hero-image" class="form-label">
+
+            <label for="hero-image-button" class="form-label">
                 <i class="bi bi-card-image me-2"></i>
                 Hero Image *
             </label>
+
             <button
                 id="hero-image-button"
                 class="btn btn-outline-primary"
                 type="button">
+
                 <i class="bi bi-upload me-2"></i>
                 Select Hero Image
+
             </button>
+
+            <input
+                id="hero-image-input"
+                type="file"
+                accept="image/*"
+                hidden>
+
             <div
                 id="hero-image-name"
                 class="small text-muted mt-2">
+
                 No image selected
+
             </div>
+
             <div class="image-preview-container mt-3">
+
                 <img
                     id="hero-preview"
                     class="image-preview"
                     hidden>
+
             </div>
+
         </div>
         <div class="mb-3">
             <label for="hero-title" class="form-label">

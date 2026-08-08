@@ -13,8 +13,9 @@
         <div class="mb-4">
 
             <label
-                for="about-image"
+                for="about-image-button"
                 class="form-label">
+
                 <i class="bi bi-card-image me-2"></i>
                 About Image *
 
@@ -24,10 +25,17 @@
                 id="about-image-button"
                 class="btn btn-outline-primary"
                 type="button">
+
                 <i class="bi bi-upload me-2"></i>
                 Select About Image
 
             </button>
+
+            <input
+                id="about-image-input"
+                type="file"
+                accept="image/*"
+                hidden>
 
             <div
                 id="about-image-name"

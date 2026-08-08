@@ -4,13 +4,19 @@ import HomePage from "../pages/HomePage.js";
 import WebsiteDetailsPage from "../pages/WebsiteDetailsPage.js";
 import PreviewPage from "../pages/PreviewPage.js";
 import SuccessPage from "../pages/SuccessPage.js";
+import ValidationService from "../services/ValidationService.js";
 
 export default class App {
 
     constructor() {
 
-        this.componentLoader = new ComponentLoader();
+        this.validationService = new ValidationService();
+
+        this.componentLoader =
+            new ComponentLoader(this.validationService);
+
         this.router = new Router(this.componentLoader);
+
     }
 
     registerPages() {
