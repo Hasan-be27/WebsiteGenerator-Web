@@ -14,21 +14,31 @@ export default class Router {
 
     }
 
-    navigate(route) {
+    navigate(route, data = null) {
 
-        const page = this.pages.find(page => page.route === route);
+        const page =
+            this.pages.find(
+                page => page.route === route
+            );
 
         if (!page) {
 
-            console.error(`Route "${route}" not found.`);
+            console.error(
+                `Route "${route}" not found.`
+            );
 
             return;
 
         }
 
-        console.log(`Navigating to "${page.name}"`);
+        console.log(
+            `Navigating to "${page.name}"`
+        );
 
-        this.componentLoader.load(page);
+        this.componentLoader.load(
+            page,
+            data
+        );
 
     }
 

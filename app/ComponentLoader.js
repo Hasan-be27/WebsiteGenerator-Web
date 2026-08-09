@@ -1,37 +1,43 @@
 export default class ComponentLoader {
+
     constructor(validationService) {
 
         this.validationService = validationService;
 
         this.loadedStyles = new Set();
         this.loadedModules = new Map();
+        this.components = new Map();
 
     }
 
-    async load(page) {
+    async load(page, data=null) {
 
         const container = document.getElementById("app");
 
         container.innerHTML = "";
 
+        this.components.clear();
+
         for (const component of page.components) {
 
             console.log(`Loading component "${component}"...`);
 
-            await this.loadComponent(component, container);
+            await this.loadComponent(component, container, data);
 
         }
 
     }
 
-    async loadComponent(componentName, container) {
+    async loadComponent(componentName, container, data=null) {
+
         console.group(`Component: ${componentName}`);
 
         this.loadCSS(componentName);
 
         const fileName = componentName.toLowerCase();
 
-        const htmlPath = `components/${componentName}/${fileName}.html`;
+        const htmlPath =
+            `components/${componentName}/${fileName}.html`;
 
         try {
 
@@ -45,31 +51,47 @@ export default class ComponentLoader {
 
             const html = await response.text();
 
-            container.insertAdjacentHTML("beforeend", html);
+            container.insertAdjacentHTML(
+                "beforeend",
+                html
+            );
 
-            const element = container.lastElementChild;
+            const element =
+                container.lastElementChild;
 
-            const Component = await this.loadJS(componentName);
+            const Component =
+                await this.loadJS(componentName);
 
-            const component = new Component(element);
+            const component =
+                new Component(element);
 
-            component.validationService = this.validationService;
+            component.validationService =
+                this.validationService;
+
             console.log(
                 `${componentName} validation service:`,
                 component.validationService
             );
-            component.init();
 
+            component.init(data);
+
+            this.components.set(
+                componentName,
+                component
+            );
 
         }
 
         catch (error) {
 
-            console.error(`❌ Component "${componentName}" could not be loaded.`);
+            console.error(
+                `❌ Component "${componentName}" could not be loaded.`
+            );
 
             console.error(error.message);
 
         }
+
         finally {
 
             console.groupEnd();
@@ -77,46 +99,68 @@ export default class ComponentLoader {
         }
 
     }
-    loadCSS(componentName) {
 
-    const fileName = componentName.toLowerCase();
+    getComponent(componentName) {
 
-    const cssPath =
-        `components/${componentName}/${fileName}.css`;
-
-    if (this.loadedStyles.has(cssPath)) {
-
-        return;
+        return this.components.get(componentName);
 
     }
 
-    const link = document.createElement("link");
+    getComponents() {
 
-    link.rel = "stylesheet";
-    link.href = cssPath;
+        return this.components;
 
-    link.onload = () => {
+    }
 
-        console.log(`CSS loaded: ${cssPath}`);
+    loadCSS(componentName) {
 
-    };
+        const fileName =
+            componentName.toLowerCase();
 
-    link.onerror = () => {
+        const cssPath =
+            `components/${componentName}/${fileName}.css`;
 
-        console.error(`❌ CSS failed to load: ${cssPath}`);
+        if (this.loadedStyles.has(cssPath)) {
 
-    };
+            return;
 
-    document.head.appendChild(link);
+        }
 
-    this.loadedStyles.add(cssPath);
+        const link =
+            document.createElement("link");
 
-}
+        link.rel = "stylesheet";
+        link.href = cssPath;
+
+        link.onload = () => {
+
+            console.log(
+                `CSS loaded: ${cssPath}`
+            );
+
+        };
+
+        link.onerror = () => {
+
+            console.error(
+                `❌ CSS failed to load: ${cssPath}`
+            );
+
+        };
+
+        document.head.appendChild(link);
+
+        this.loadedStyles.add(cssPath);
+
+    }
+
     async loadJS(componentName) {
 
-        const fileName = componentName.toLowerCase();
+        const fileName =
+            componentName.toLowerCase();
 
-        const jsPath = `../components/${componentName}/${fileName}.js`;
+        const jsPath =
+            `../components/${componentName}/${fileName}.js`;
 
         if (this.loadedModules.has(jsPath)) {
 
@@ -124,9 +168,13 @@ export default class ComponentLoader {
 
         }
 
-        const module = await import(jsPath);
+        const module =
+            await import(jsPath);
 
-        this.loadedModules.set(jsPath, module.default);
+        this.loadedModules.set(
+            jsPath,
+            module.default
+        );
 
         return module.default;
 

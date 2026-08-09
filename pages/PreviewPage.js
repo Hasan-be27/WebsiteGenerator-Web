@@ -6,7 +6,9 @@ export default class PreviewPage {
 
         this.route = "/preview";
 
-        this.components = [];
+        this.components = [
+            "Preview"
+        ];
 
     }
 

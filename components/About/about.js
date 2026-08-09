@@ -38,7 +38,17 @@ export default class About extends Component {
 
     registerEvents() {
 
-        // About-specific events will go here
+        this.heading.addEventListener("input", () => {
+
+            this.validationService.validate("about");
+
+        });
+
+        this.description.addEventListener("input", () => {
+
+            this.validationService.validate("about");
+
+        });
 
     }
 

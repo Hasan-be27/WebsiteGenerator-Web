@@ -95,3 +95,47 @@ getData()
 No architectural changes.
 
 Project continues under the locked architecture established before implementation.
+
+
+## 2026-08-09
+
+### Added
+
+- Added working website preview functionality.
+- Preview now opens in a new browser tab.
+- Preview renders using the actual Handlebars website template.
+- Added dynamic loading of Handlebars partials.
+- Added temporary image handling for previews.
+- Added local website generation through the browser filesystem API.
+- Added generation of the complete website asset structure.
+- Added copying of uploaded Hero and About images into generated website assets.
+- Restored/verified template JavaScript and favicon assets.
+- Added integration between GeneratorService, StorageService, and TemplateService.
+
+### Changed
+
+- Preview no longer depends on a previously generated website.
+- Preview is available regardless of form validation state.
+- Generate Website remains validation-controlled.
+- Image handling was separated between temporary preview URLs and permanent generated image files.
+
+### Fixed
+
+- Fixed `[object File]` appearing as image sources.
+- Fixed generated websites referencing temporary `blob:` image URLs.
+- Fixed missing template JavaScript asset in generated/preview websites.
+- Fixed missing favicon asset.
+- Fixed template partial rendering.
+- Fixed About validation behavior when image and description are entered in different orders.
+
+### Verified
+
+A generated website was tested and confirmed to contain:
+
+- `index.html`
+- `assets/css/style.css`
+- `assets/js/script.js`
+- Hero image
+- About image
+
+The generated website renders correctly outside the generator.

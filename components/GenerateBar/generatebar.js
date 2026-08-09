@@ -26,8 +26,7 @@ export default class GenerateBar extends Component {
 
             console.log("Generate Website clicked");
 
-            // M3:
-            // this.emit("generate");
+            this.emit("generate");
 
         });
 
@@ -35,8 +34,7 @@ export default class GenerateBar extends Component {
 
             console.log("Preview clicked");
 
-            // M4:
-            // this.emit("preview");
+            this.emit("preview");
 
         });
 
