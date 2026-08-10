@@ -50,3 +50,7 @@
 .generate-btn{
     min-width:220px;
 }
+
+.generate-bar .d-flex{
+    gap:18px !important;
+}

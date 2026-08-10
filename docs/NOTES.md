@@ -329,3 +329,264 @@ Business Name/
     └── images/
         ├── hero image
         └── about image
+
+## Generation Completion
+
+The website generation flow now ends on the Success page after a successful save.
+
+The Success page:
+
+- Confirms that the website was generated successfully.
+- Displays the generated website folder name.
+- Provides navigation back to the Home page.
+- Provides navigation to create another website.
+
+The existing generation pipeline and locked architecture remain unchanged.
+
+
+## GitHub Deployment
+
+The Web Edition now has the initial GitHub deployment pipeline in place.
+
+- GitHub App: Website Generator Web
+- Hosting account: Hasan-be27
+- Hosting repository: WGwebsites
+- One repository is used for all generated websites.
+- Each website is stored in its own sanitized folder.
+- GitHub Pages publishes the repository root.
+- The deployment backend constructs the final website URL from the Pages base URL and website folder.
+- The GitHub private key remains outside the Web Edition and is used only by the deployment backend.
+
+Development deployment flow:
+
+Web Edition
+↓
+Deployment backend
+↓
+GitHub App installation
+↓
+WGwebsites
+↓
+GitHub Pages
+↓
+Website-specific URL
+
+The current backend is a local development service. It must not be exposed publicly without adding proper authentication/authorization to the deployment endpoint.
+
+### Updated GitHub deployment flow
+
+The Generate Website action now focuses on publishing the website. It no longer opens the local destination-folder picker before deployment.
+
+During publishing, a full-screen loader prevents interaction with the Website Details page until the deployment process finishes.
+
+After successful deployment, the Success page provides:
+
+- The live GitHub Pages URL.
+- An Open Website action.
+- A Save Website Locally action for the previous local-folder generation behavior.
+- A notice that GitHub Pages may briefly return 404 while the deployment finishes.
+
+Cancelling the local folder picker is now independent from GitHub deployment.
+
+## Current Project State
+
+The Web Edition is the primary version of the Website Generator.
+
+Architecture is locked for this version:
+- App
+- Router
+- Pages
+- Components
+- Services
+
+Components are migrated/adapted from the Electron project rather than unnecessarily rewritten.
+No architecture changes should be introduced during this version. New ideas go to a future version.
+
+The normal workflow remains:
+design → implementation → testing → commit → documentation
+
+## GitHub Hosting Architecture
+
+The Website Generator now supports automatic hosting of generated websites through GitHub.
+
+The intended architecture is:
+
+Public Web Edition
+    ↓
+Deployment Server
+    ↓
+GitHub App
+    ↓
+Single public WGwebsites repository
+    ↓
+GitHub Pages
+
+All generated websites are stored in the same `WGwebsites` repository, with one folder per generated website.
+
+Example:
+WGwebsites/
+├── abc-bakery/
+├── abc-bakery-2/
+├── royal-restaurant/
+└── ...
+
+## GitHub App
+
+A GitHub App has been created and installed for the deployment system.
+
+The App is restricted to the required repository and permissions.
+
+The GitHub App private key remains server-side and must never be included in the Web Edition or public repositories.
+
+## Deployment Server
+
+A separate Node.js/Express deployment server has been developed.
+
+Current local flow:
+Web Edition
+    ↓
+http://localhost:3000/github/deploy
+    ↓
+GitHub App authentication
+    ↓
+WGwebsites
+    ↓
+GitHub Pages
+
+The deployment server currently:
+- authenticates using the GitHub App
+- uploads generated website files
+- creates the required website folder
+- returns the website-specific GitHub Pages URL
+- validates deployment paths
+- prevents path traversal
+- limits request/file/deployment sizes
+- limits deployment request frequency
+- restricts CORS
+- keeps GitHub credentials server-side
+- prevents public access to development/admin endpoints
+
+## Unique Website Names
+
+Generated websites must never silently overwrite an existing website.
+
+If a generated folder already exists, the deployment server automatically creates a numbered folder.
+
+Example:
+abc-bakery/
+abc-bakery-2/
+abc-bakery-3/
+
+The Success page receives the actual URL corresponding to the unique folder.
+
+## Current Web Edition Flow
+
+The current Generate Website flow is:
+
+Generate Website
+    ↓
+Collect website data
+    ↓
+Generate/render website
+    ↓
+Deploy directly to GitHub
+    ↓
+Show loading/blocking state during deployment
+    ↓
+Success Page
+
+The folder picker is no longer part of the Generate Website process.
+
+The Success Page now provides:
+- live website link
+- Open Website action
+- Save Website Locally action
+- Back/Home navigation
+
+Saving locally is now a separate action and uses the folder picker only when the user explicitly chooses it.
+
+The Success Page also informs the user that GitHub Pages may take a minute or two to finish deploying, so a temporary 404 can occur immediately after deployment.
+
+## GitHub Pages
+
+GitHub Pages is configured for the `WGwebsites` repository.
+
+The repository root is the Pages site, while individual generated websites are served from their own subfolders.
+
+Example:
+https://hasan-be27.github.io/WGwebsites/abc-bakery/
+
+The GitHub Pages API returns the repository-level Pages URL, so the deployment backend constructs the final website URL by appending the generated website folder.
+
+## Important Hosting Decision
+
+GitHub Actions was researched as a possible replacement for the deployment server.
+
+Decision:
+- Do NOT use GitHub Actions as the runtime deployment API.
+- GitHub Actions can execute Node.js, but it is not a persistent Express server.
+- Triggering workflows safely from the public Web Edition would require authentication that cannot simply be embedded in browser JavaScript.
+- Therefore, GitHub Actions should not replace the deployment server.
+
+Preferred production architecture:
+Public Web Edition
+    ↓ HTTPS
+Online Node.js deployment server
+    ↓
+GitHub App
+    ↓
+WGwebsites
+    ↓
+GitHub Pages
+
+GitHub Actions may later be used for CI/CD of the private deployment server.
+
+## Planned Private Repository
+
+A separate private GitHub repository should be created:
+`WebsiteGenerator-Server`
+
+It will contain the deployment backend source code.
+
+It must NOT contain:
+- `.env`
+- GitHub App `.pem` private key
+- other production secrets
+
+The deployment server is currently still local. It has NOT yet been moved online.
+
+## Current Security State
+
+Backend hardening has been implemented locally.
+
+Current protections include:
+- restricted CORS
+- deployment rate limiting
+- request body limit
+- file count limit
+- individual file size limit
+- total deployment size limit
+- folder-name length/sanitization rules
+- file-path validation
+- path traversal protection
+- server-side GitHub owner/repository configuration
+- server-side GitHub App credentials
+- local-only development/admin endpoints
+
+A CORS issue was encountered after hardening and fixed. The Web Edition now works again with the local deployment server.
+
+## UI Updates
+
+Recent UI updates:
+- Preview and Generate Website buttons were given more spacing.
+- Dark text on dark backgrounds in the recent deployment/update UI was changed to light text.
+- Home page tagline changed from:
+  "Generate ready-to-host static websites in minutes."
+  to:
+  "Generate and Host static websites in minutes."
+
+## Project Scope
+
+GitHub deployment is a development/demo hosting feature, not intended to be treated as a commercial hosting service at this stage.
+
+Local ZIP export remains part of the application.

@@ -6,7 +6,9 @@ export default class SuccessPage {
 
         this.route = "/success";
 
-        this.components = [];
+        this.components = [
+            "Success"
+        ];
 
     }
 

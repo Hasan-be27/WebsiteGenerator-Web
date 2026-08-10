@@ -122,6 +122,106 @@ export default class ZipService {
 
     }
 
+    async getWebsiteFiles(html, data) {
+
+        const files = [
+            {
+                path: "index.html",
+                content: html,
+                encoding: "utf8"
+            },
+            {
+                path: "assets/css/style.css",
+                content: await this.getTemplateText(
+                    "templates/default/assets/css/style.css"
+                ),
+                encoding: "utf8"
+            },
+            {
+                path: "assets/js/script.js",
+                content: await this.getTemplateText(
+                    "templates/default/assets/js/script.js"
+                ),
+                encoding: "utf8"
+            }
+        ];
+
+        const images = [
+            {
+                file: data.hero?.image,
+                pathPrefix: "assets/images/hero"
+            },
+            {
+                file: data.about?.image,
+                pathPrefix: "assets/images/about"
+            }
+        ];
+
+        for (const image of images) {
+
+            if (!(image.file instanceof File)) {
+                continue;
+            }
+
+            files.push({
+                path:
+                    `${image.pathPrefix}${this.getExtension(image.file.name)}`,
+                content:
+                    await this.fileToBase64(image.file),
+                encoding: "base64"
+            });
+
+        }
+
+        return files;
+
+    }
+
+    async getTemplateText(sourcePath) {
+
+        const response =
+            await fetch(sourcePath);
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Unable to load template asset: ${sourcePath}`
+            );
+
+        }
+
+        return await response.text();
+
+    }
+
+    async fileToBase64(file) {
+
+        const buffer =
+            await file.arrayBuffer();
+
+        let binary = "";
+        const bytes = new Uint8Array(buffer);
+        const chunkSize = 0x8000;
+
+        for (
+            let index = 0;
+            index < bytes.length;
+            index += chunkSize
+        ) {
+
+            binary += String.fromCharCode(
+                ...bytes.subarray(
+                    index,
+                    Math.min(index + chunkSize, bytes.length)
+                )
+            );
+
+        }
+
+        return btoa(binary);
+
+    }
+
     async copyTemplateFile(
         sourcePath,
         destinationDirectory,

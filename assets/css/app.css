@@ -19,3 +19,41 @@ body{
     min-height:100vh;
     padding-bottom:160px;
 }
+.generation-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 20000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, .55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.generation-loader-card {
+    width: min(440px, 100%);
+    padding: 34px 30px;
+    text-align: center;
+    border-radius: 16px;
+    background: rgba(33, 37, 41, .92);
+    border: 1px solid rgba(255, 255, 255, .08);
+    box-shadow: 0 20px 55px rgba(0, 0, 0, .4);
+}
+
+.generation-loader .spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+.generation-loader h2 {
+    margin: 20px 0 8px;
+    font-size: 1.45rem;
+    color: #f8f9fa;
+}
+
+.generation-loader p {
+    margin: 0;
+    color: #e9ecef;
+}

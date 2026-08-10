@@ -54,8 +54,8 @@
 - [x] Copy uploaded images
 - [x] Allow user to choose output directory
 - [x] Verify generated website manually
-- [ ] Add proper generation completion / Success screen
-- [ ] Improve output-folder/user experience
+- [x] Add proper generation completion / Success screen
+- [x] Improve output-folder/user experience
 
 ---
 
@@ -80,18 +80,21 @@
 - [x] Image copying
 - [ ] Export website as ZIP
 - [ ] Improve handling of destination folders
-- [ ] Finalize Success screen
+- [x] Finalize Success screen
 
 ---
 
 ## GitHub
 
-- [ ] Connect GitHub account
-- [ ] Create/select repository
-- [ ] Upload generated website
-- [ ] Configure GitHub Pages
-- [ ] Deploy generated website automatically
-- [ ] Display deployed website URL
+- [x] Authenticate deployment backend with GitHub App
+- [x] Connect deployment backend to WGwebsites
+- [x] Upload test website to repository
+- [x] Configure GitHub Pages
+- [x] Generate website-specific Pages URL
+- [x] Upload generated website from Web Edition
+- [x] Deploy generated website automatically
+- [x] Display deployed website URL
+- [ ] Secure public deployment backend
 
 ---
 
@@ -110,3 +113,41 @@
 - [x] Update CHANGELOG.md
 - [x] Update TODO.md
 - [ ] Commit current milestone
+
+## Current Priority — Production Deployment Infrastructure
+
+### M6.4-B — Production Deployment Server
+
+- [ ] Create private GitHub repository: `WebsiteGenerator-Server`
+- [ ] Commit the current hardened deployment-server code to the private repository.
+- [ ] Ensure `.env` and `.pem` are excluded by `.gitignore`.
+- [ ] Prepare the deployment server specifically for production.
+- [ ] Choose and configure an online Node.js hosting service.
+- [ ] Preferred current option: Render.
+- [ ] Deploy the private deployment server online with HTTPS.
+- [ ] Configure production environment variables/secrets.
+- [ ] Store the GitHub App private key securely on the server.
+- [ ] Configure production CORS to allow only the Web Edition origin.
+- [ ] Add production request authentication / abuse protection.
+- [ ] Keep GitHub credentials completely server-side.
+- [ ] Update the Web Edition to use the production deployment-server URL.
+- [ ] Test deployment from the public-facing Web Edition.
+- [ ] Test duplicate website names after moving to production.
+- [ ] Test GitHub Pages propagation and temporary 404 behavior.
+- [ ] Perform security/abuse testing.
+
+### Documentation / Release
+
+- [ ] Update NOTES.md after M6 production deployment work.
+- [ ] Update CHANGELOG.md after M6 production deployment work.
+- [ ] Update TODO.md after M6 production deployment work.
+- [ ] Commit the Website Generator changes to Git.
+- [ ] Push the Website Generator repository to GitHub.
+- [ ] Create and populate the separate private `WebsiteGenerator-Server` repository.
+- [ ] Keep `WGwebsites` as the single public repository containing all generated websites.
+
+### Future / Not Yet
+
+- [ ] Consider GitHub Actions for CI/CD of the private deployment server.
+- [ ] Consider always-on paid hosting when real usage requires it.
+- [ ] New architecture ideas remain deferred to a future version.

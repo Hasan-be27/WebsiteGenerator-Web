@@ -139,3 +139,76 @@ A generated website was tested and confirmed to contain:
 - About image
 
 The generated website renders correctly outside the generator.
+
+## 2026-08-10
+
+### Added
+
+- Added the Success component and Success page flow.
+- Generation now navigates to the Success page after the website is saved successfully.
+- Success page displays the generated website folder name.
+- Added actions to create another website or return to Home.
+
+
+## 2026-08-11
+
+### Added
+
+- Added GitHub App based deployment backend integration.
+- Added automatic connection to the `Hasan-be27/WGwebsites` repository.
+- Added GitHub Pages configuration through the deployment backend.
+- Added website-specific GitHub Pages URL generation.
+- Added GitHub deployment service integration to the Web Edition generation flow.
+- Updated the Success page to display the live website URL and Open Website action.
+
+### Verified
+
+- GitHub App authentication works through the installation.
+- Test website files can be written to `WGwebsites`.
+- GitHub Pages serves website subfolders.
+
+## 2026-08-11 — GitHub Deployment Flow
+
+### Changed
+
+- Generate Website now publishes the website directly instead of opening the local destination-folder picker first.
+- Added a generation/deployment loader that blocks interaction while publishing is in progress.
+- Moved local website saving to the Success page as an optional action.
+- Added a GitHub Pages deployment warning explaining that a new website may briefly show 404 while Pages finishes deploying.
+
+### Added
+
+- Added `Save Website Locally` action to the Success page.
+- Local saving now uses the same generated website that was just published.
+- Cancelling the local folder picker no longer affects website generation or deployment.
+
+
+## [Unreleased]
+
+### Added
+- Automatic GitHub deployment of generated websites.
+- GitHub App based authentication for repository deployment.
+- GitHub Pages hosting integration.
+- Automatic generation of website-specific live URLs.
+- Deployment loading/blocking state on the Website Details page.
+- Save Website Locally action on the Success page.
+- GitHub Pages propagation/temporary 404 guidance on the Success page.
+- Automatic unique website folder naming using `-2`, `-3`, etc. when a folder already exists.
+- Deployment backend validation, request limits, file limits, path validation, CORS restrictions, and rate limiting.
+- Separate deployment-server architecture for GitHub operations.
+
+### Changed
+- Generate Website now deploys directly to GitHub instead of opening the local folder picker.
+- Local folder selection was moved to the Success Page under Save Website Locally.
+- Success Page now displays the actual hosted website URL.
+- Home page tagline changed to "Generate and Host static websites in minutes."
+- Preview and Generate Website button spacing improved.
+- Dark-on-dark text in recent deployment/update UI changed to light text for readability.
+
+### Security
+- GitHub App credentials remain server-side.
+- GitHub private key is not included in the Web Edition.
+- Deployment repository and owner are controlled by the deployment server rather than client input.
+- Deployment paths and folder names are validated.
+- Deployment request/file/size limits were added.
+- Development/admin deployment endpoints are restricted to local use.

@@ -1,6 +1,6 @@
 export default class GeneratorService {
 
-    constructor(componentLoader, storageService, templateService, zipService) {
+    constructor(componentLoader, storageService, templateService, zipService, githubService) {
 
         this.componentLoader =
             componentLoader;
@@ -13,6 +13,11 @@ export default class GeneratorService {
 
         this.zipService =
             zipService;
+
+        this.githubService =
+            githubService;
+
+        this.lastGenerated = null;
 
     }
 
@@ -43,12 +48,46 @@ export default class GeneratorService {
                 outputData
             );
 
-        await this.zipService.saveWebsite(
+        const files =
+            await this.zipService.getWebsiteFiles(
+                html,
+                data
+            );
+
+        const folderName =
+            this.zipService.sanitizeName(
+                data.business?.name?.trim() || "website"
+            );
+
+        this.lastGenerated = {
             html,
             data
-        );
+        };
 
-        return html;
+        const deployment =
+            await this.githubService.deploy({
+                folderName,
+                files
+            });
+
+        return deployment;
+
+    }
+
+    async saveLocal() {
+
+        if (!this.lastGenerated) {
+
+            throw new Error(
+                "No generated website is available to save."
+            );
+
+        }
+
+        return await this.zipService.saveWebsite(
+            this.lastGenerated.html,
+            this.lastGenerated.data
+        );
 
     }
 
