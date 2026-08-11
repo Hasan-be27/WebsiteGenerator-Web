@@ -1,6 +1,6 @@
 export default class GitHubService {
 
-    constructor(baseURL = "http://localhost:3000") {
+    constructor(baseURL = "https://websitegenerator-deployment-server.onrender.com") {
 
         this.baseURL =
             baseURL.replace(/\/$/, "");
