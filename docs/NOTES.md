@@ -590,3 +590,114 @@ Recent UI updates:
 GitHub deployment is a development/demo hosting feature, not intended to be treated as a commercial hosting service at this stage.
 
 Local ZIP export remains part of the application.
+
+
+## Project State
+
+The Web Edition is the primary browser-based version of Website Generator.
+
+The architecture remains locked:
+
+- App
+- Router
+- Pages
+- Components
+- Services
+
+Components are migrated/adapted from the Electron version where applicable rather than unnecessarily rewritten.
+
+No architecture changes should be introduced during this version. New architectural ideas belong to a future version.
+
+Development workflow:
+
+1. Design
+2. Implementation
+3. Testing
+4. Commit
+5. Documentation
+
+---
+
+## Current Production Architecture
+
+The Web Edition is publicly hosted using GitHub Pages:
+
+https://hasan-be27.github.io/WebsiteGenerator-Web/
+
+The deployment backend is hosted separately on Render:
+
+https://websitegenerator-deployment-server.onrender.com
+
+The backend communicates with GitHub using the configured GitHub App.
+
+Generated websites are stored in the `WGwebsites` repository and published through GitHub Pages.
+
+### Production Flow
+
+Web Edition
+→ Render Deployment Server
+→ GitHub App
+→ WGwebsites
+→ GitHub Pages
+→ Generated Website
+
+The Web Edition can therefore be used without a local deployment server.
+
+---
+
+## Local Development
+
+The Web Edition can still be run locally.
+
+The deployment backend is now accessed through the production Render server rather than the previous local deployment server.
+
+The Render backend allows both local development origins and the public GitHub Pages origin through CORS.
+
+---
+
+## Website Deployment
+
+Pressing **Generate Website** directly starts the hosting/deployment process.
+
+The user does not manually choose whether to deploy to GitHub.
+
+The deployment process:
+
+1. Collects website data.
+2. Generates the website.
+3. Sends the generated website files to the deployment backend.
+4. The backend deploys the website to the `WGwebsites` repository.
+5. GitHub Pages publishes the generated website.
+6. The Success page provides the hosted website link.
+
+GitHub Pages may take some time to publish a newly generated website. It is possible for the repository files to appear before the website becomes available, temporarily resulting in a 404.
+
+The Success page therefore informs the user to wait if the website initially shows a 404.
+
+---
+
+## Duplicate Website Names
+
+If a generated website name already exists, the deployment system automatically creates a unique name by adding a number.
+
+This prevents an existing generated website from being overwritten.
+
+---
+
+## Download / Export
+
+The Success page provides a **Download Website** function.
+
+### Desktop
+
+Desktop browsers that support the File System Access API use the folder picker.
+
+The user chooses a parent directory and the website is created as:
+
+```text
+Business Name/
+├── index.html
+└── assets/
+    ├── css/
+    ├── js/
+    └── images/

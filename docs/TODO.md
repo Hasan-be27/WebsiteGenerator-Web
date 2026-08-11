@@ -151,3 +151,78 @@
 - [ ] Consider GitHub Actions for CI/CD of the private deployment server.
 - [ ] Consider always-on paid hosting when real usage requires it.
 - [ ] New architecture ideas remain deferred to a future version.
+
+
+# TODO
+
+## Current
+
+- [x] Test the favicon on the public GitHub Pages Web Edition.
+- [x] Test mobile ZIP download on a physical mobile device when available.
+- [x] Test the complete production flow again after pushing the latest changes.
+- [x] Confirm the public Web Edition downloads correctly after GitHub Pages redeployment.
+- [x] Update documentation after the current changes are committed.
+
+---
+
+## Testing / Reliability
+
+- [ ] Test deployment with normal realistic website data.
+- [ ] Test deployment with unusual/special characters in business names.
+- [ ] Test duplicate website names repeatedly.
+- [ ] Test very large uploaded images.
+- [ ] Test deployment failure handling.
+- [ ] Test Render cold-start delay behavior.
+- [ ] Test GitHub Pages publishing delay and Success page messaging.
+- [ ] Test ZIP download with hero image.
+- [ ] Test ZIP download with about image.
+- [ ] Test ZIP download with both images.
+- [ ] Test ZIP download without optional images.
+- [ ] Test ZIP extraction and verify the generated website works locally.
+
+---
+
+## Production Polish
+
+- [ ] Review Success page messaging and deployment status presentation.
+- [ ] Review loading state during deployment.
+- [ ] Review mobile layout across all pages.
+- [ ] Review favicon appearance in browser tabs.
+- [ ] Review error messages for non-technical users.
+- [ ] Review public Web Edition before final release.
+
+---
+
+## Future Improvements
+
+- [ ] Improve deployment progress/status feedback.
+- [ ] Consider a more reliable way of detecting when GitHub Pages has finished publishing.
+- [ ] Consider custom domains for generated websites.
+- [ ] Consider additional website templates.
+- [ ] Consider additional hosting providers.
+- [ ] Consider future architecture improvements only in a future version.
+
+---
+
+## Completed
+
+- [x] Locked Web Edition architecture.
+- [x] Migrated/adapted UI components.
+- [x] Implemented website details form.
+- [x] Implemented validation.
+- [x] Implemented preview.
+- [x] Implemented local website generation.
+- [x] Implemented website download/export.
+- [x] Implemented GitHub App deployment.
+- [x] Implemented automatic GitHub hosting.
+- [x] Created `WGwebsites` repository for generated websites.
+- [x] Created separate deployment server repository.
+- [x] Deployed deployment server to Render.
+- [x] Published Web Edition through GitHub Pages.
+- [x] Connected Web Edition to production deployment server.
+- [x] Configured production CORS.
+- [x] Added duplicate website name handling.
+- [x] Added deployment loading state.
+- [x] Added Success page deployment messaging.
+- [x] Added favicon.
+- [x] Added mobile/unsupported-browser ZIP fallback.

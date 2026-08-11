@@ -212,3 +212,47 @@ The generated website renders correctly outside the generator.
 - Deployment paths and folder names are validated.
 - Deployment request/file/size limits were added.
 - Development/admin deployment endpoints are restricted to local use.
+
+
+## Unreleased
+
+### Added
+
+- Added Web Edition favicon using the existing `assets/icons/logo.ico`.
+- Added mobile/unsupported-browser ZIP download fallback.
+- Added client-side ZIP generation using JSZip.
+- Added automatic fallback from folder selection to ZIP download when `window.showDirectoryPicker()` is unavailable.
+
+### Changed
+
+- `ZipService.saveWebsite()` now uses ZIP download instead of failing when folder selection is unavailable.
+- Website files prepared by `getWebsiteFiles()` are now reusable for ZIP downloads as well as deployment.
+- Web Edition deployment now communicates with the production Render deployment server instead of the local deployment server.
+
+### Production
+
+- Web Edition is publicly available through GitHub Pages.
+- Deployment backend is hosted on Render.
+- Production CORS allows the public Web Edition and local development origins.
+- Generated websites are deployed to the `WGwebsites` repository and hosted through GitHub Pages.
+
+### Fixed
+
+- Corrected production CORS origin configuration by using the origin without the `/WebsiteGenerator-Web` path.
+- Corrected the production deployment endpoint configuration so `/github/deploy` is appended only once.
+
+---
+
+## Previous Milestone
+
+### GitHub Deployment
+
+- Added automatic GitHub deployment.
+- Added GitHub App integration.
+- Added production deployment backend.
+- Added automatic generated website hosting through GitHub Pages.
+- Added duplicate website name handling.
+- Added deployment loading state.
+- Added deployment status handling on the Success page.
+- Added guidance for temporary GitHub Pages 404 delays.
+- Added download/export functionality to the Success page.

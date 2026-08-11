@@ -4,9 +4,7 @@ export default class ZipService {
 
         if (!window.showDirectoryPicker) {
 
-            throw new Error(
-                "This browser does not support folder selection."
-            );
+            return await this.downloadZip(html, data);
 
         }
 
@@ -119,6 +117,89 @@ export default class ZipService {
         );
 
         return websiteDirectory;
+
+    }
+    async downloadZip(html, data) {
+
+        if (!window.JSZip) {
+
+            throw new Error(
+                "ZIP download is unavailable."
+            );
+
+        }
+
+        const files =
+            await this.getWebsiteFiles(
+                html,
+                data
+            );
+
+        const zip =
+            new window.JSZip();
+
+        for (const file of files) {
+
+            if (file.encoding === "base64") {
+
+                zip.file(
+                    file.path,
+                    file.content,
+                    {
+                        base64: true
+                    }
+                );
+
+            } else {
+
+                zip.file(
+                    file.path,
+                    file.content
+                );
+
+            }
+
+        }
+
+        const zipBlob =
+            await zip.generateAsync({
+                type: "blob",
+                compression: "DEFLATE",
+                compressionOptions: {
+                    level: 6
+                }
+            });
+
+        const businessName =
+            data.business?.name?.trim() ||
+            "website";
+
+        const filename =
+            `${this.sanitizeName(businessName)}.zip`;
+
+        const url =
+            URL.createObjectURL(zipBlob);
+
+        const link =
+            document.createElement("a");
+
+        link.href = url;
+        link.download = filename;
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+
+        URL.revokeObjectURL(url);
+
+        console.log(
+            "Website ZIP downloaded:",
+            filename
+        );
+
+        return filename;
 
     }
 
