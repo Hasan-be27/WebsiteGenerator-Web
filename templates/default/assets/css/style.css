@@ -454,6 +454,24 @@ img{
         margin: 10px 0;
 
     }
+    /* Mobile menu overlay */
+    .navbar .navbar-collapse.show {
+        margin-top: 12px;
+        padding: 12px 16px;
+
+        background: rgba(0, 0, 0, .72);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        border: 1px solid rgba(255, 255, 255, .12);
+
+        border-radius: 12px;
+
+        box-shadow:
+            0 12px 30px rgba(0, 0, 0, .25);
+    }
+
 
 }
 /* ==========================================================
@@ -875,17 +893,56 @@ img{
 }
 /* ==========================================================
    SERVICES
-   ========================================================== */
+========================================================== */
+
+.services-grid {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 30px;
+
+}
+
 
 .service-card {
 
+    flex: 0 1 350px;
+
+    max-width: 350px;
+
     text-align: center;
 
-    border: none;
+    border: 1px solid #e9ecef;
+
+    border-radius: 14px;
 
     padding: 25px;
 
+    background: #f6f7f9;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, .05);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+
 }
+
+
+.service-card:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, .08);
+
+}
+
 
 .service-icon {
 
@@ -896,14 +953,19 @@ img{
 
     border-radius: 50%;
 
-    background: rgba(13,110,253,.1);
+    background: rgba(13, 110, 253, .1);
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
-    transition:all .35s ease;
+
+    transition:
+        transform .35s ease;
 
 }
+
 
 .service-icon i {
 
@@ -913,14 +975,50 @@ img{
 
 }
 
+
 .service-card h4 {
 
     margin-bottom: 15px;
 
 }
-.service-card:hover .service-icon{
 
-    transform:scale(1.12) rotate(8deg);
+
+.service-card p {
+
+    margin-bottom: 0;
+
+}
+
+
+.service-card:hover .service-icon {
+
+    transform:
+        scale(1.12)
+        rotate(8deg);
+
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 768px) {
+
+    .services-grid {
+
+        gap: 20px;
+
+    }
+
+
+    .service-card {
+
+        flex: 1 1 100%;
+
+        max-width: 100%;
+
+    }
 
 }
 /* ==========================================================

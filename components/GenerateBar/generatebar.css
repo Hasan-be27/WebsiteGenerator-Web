@@ -1,56 +1,109 @@
-.generate-bar{
+.generate-bar {
 
-    position:fixed;
+    position: fixed;
 
-    left:50%;
-    bottom:24px;
+    left: 50%;
+    bottom: 24px;
 
-    transform:translateX(-50%);
+    transform: translateX(-50%);
 
-    width:min(1300px, calc(100vw - 40px));
+    width: min(1300px, calc(100vw - 40px));
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-    padding:18px 22px;
+    padding: 18px 22px;
 
-    border-radius:14px;
+    border-radius: 14px;
 
-    background:rgba(33,37,41,.82);
+    background: rgba(33, 37, 41, .82);
 
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
-    border:1px solid rgba(255,255,255,.08);
+    border: 1px solid rgba(255, 255, 255, .08);
 
     box-shadow:
-        0 12px 35px rgba(0,0,0,.35),
-        inset 0 1px rgba(255,255,255,.05);
+        0 12px 35px rgba(0, 0, 0, .35),
+        inset 0 1px rgba(255, 255, 255, .05);
 
-    z-index:9999;
-
+    z-index: 9999;
 }
 
-.generate-status{
+.generate-status {
 
-    color:#d1d5db;
+    color: #d1d5db;
 
-    font-size:.95rem;
+    font-size: .95rem;
 
-    font-weight:500;
-
+    font-weight: 500;
 }
 
-#generate-website-btn{
+#generate-website-btn {
 
-    min-width:210px;
-
-}
-.generate-btn{
-    min-width:220px;
+    min-width: 210px;
 }
 
-.generate-bar .d-flex{
-    gap:18px !important;
+.generate-btn {
+
+    min-width: 220px;
+}
+
+.generate-bar .d-flex {
+
+    gap: 18px !important;
+}
+
+
+/* -------------------------------- */
+/* Mobile layout                    */
+/* -------------------------------- */
+
+@media (max-width: 768px) {
+
+    .generate-bar {
+
+        width: calc(100vw - 24px);
+
+        bottom: 12px;
+
+        padding: 14px;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 14px;
+
+    }
+
+    .generate-status {
+
+        width: 100%;
+
+        text-align: left;
+
+        line-height: 1.4;
+
+    }
+
+    .generate-bar .d-flex {
+
+        width: 100%;
+
+        flex-direction: column;
+
+        gap: 10px !important;
+
+    }
+
+    .generate-bar .d-flex button {
+
+        width: 100%;
+
+        min-width: 0;
+
+    }
+
 }
