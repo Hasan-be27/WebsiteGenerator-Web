@@ -48,10 +48,17 @@ export default class GeneratorService {
                 outputData
             );
 
+        const servicePages =
+            await this.generateServicePages(
+                data,
+                outputData
+            );
+
         const files =
             await this.zipService.getWebsiteFiles(
                 html,
-                data
+                data,
+                servicePages
             );
 
         const folderName =
@@ -84,9 +91,21 @@ export default class GeneratorService {
 
         }
 
+        const outputData =
+            this.prepareOutputData(
+                this.lastGenerated.data
+            );
+
+        const servicePages =
+            await this.generateServicePages(
+                this.lastGenerated.data,
+                outputData
+            );
+
         return await this.zipService.saveWebsite(
             this.lastGenerated.html,
-            this.lastGenerated.data
+            this.lastGenerated.data,
+            servicePages
         );
 
     }
@@ -176,6 +195,30 @@ export default class GeneratorService {
 
         }
 
+        if (Array.isArray(data.services)) {
+
+            previewData.services =
+                data.services.map(service => {
+
+                    const previewService = {
+                        ...service
+                    };
+
+                    if (service.image instanceof File) {
+
+                        previewService.image =
+                            URL.createObjectURL(
+                                service.image
+                            );
+
+                    }
+
+                    return previewService;
+
+                });
+
+        }
+
         return previewData;
 
     }
@@ -209,7 +252,79 @@ export default class GeneratorService {
 
         }
 
+        if (Array.isArray(data.services)) {
+
+            outputData.services =
+                data.services.map((service, index) => {
+
+                    const outputService = {
+                        ...service
+                    };
+
+                    if (service.image instanceof File) {
+
+                        outputService.image =
+                            "assets/images/services/service-" +
+                            index +
+                            this.getExtension(
+                                service.image.name
+                            );
+
+                    }
+
+                    return outputService;
+
+                });
+
+        }
+
         return outputData;
+
+    }
+    async generateServicePages(data, outputData) {
+
+        const pages = [];
+
+        for (
+            let index = 0;
+            index < outputData.services.length;
+            index++
+        ) {
+
+            const service =
+                outputData.services[index];
+
+            const html =
+                await this.templateService.renderService({
+
+                    business: outputData.business,
+
+                    service: {
+                        ...service,
+
+                        image:
+                            "../" +
+                            service.image
+                    }
+
+                });
+
+            pages.push({
+
+                path:
+                    `services/service-${index}.html`,
+
+                content:
+                    html,
+
+                encoding:
+                    "utf8"
+
+            });
+
+        }
+
+        return pages;
 
     }
 

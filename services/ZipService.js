@@ -1,6 +1,10 @@
 export default class ZipService {
 
-    async saveWebsite(html, data) {
+    async saveWebsite(
+        html,
+        data,
+        servicePages = []
+    ) {
 
         if (!window.showDirectoryPicker) {
 
@@ -29,6 +33,13 @@ export default class ZipService {
         const websiteDirectory =
             await parentDirectory.getDirectoryHandle(
                 folderName,
+                {
+                    create: true
+                }
+            );
+        const servicesDirectory =
+            await websiteDirectory.getDirectoryHandle(
+                "services",
                 {
                     create: true
                 }
@@ -68,7 +79,13 @@ export default class ZipService {
                     create: true
                 }
             );
-
+        const servicesImagesDirectory =
+            await imagesDirectory.getDirectoryHandle(
+                "services",
+                {
+                    create: true
+                }
+            );
         /*
          * Save index.html.
          */
@@ -77,6 +94,18 @@ export default class ZipService {
             "index.html",
             html
         );
+        for (const page of servicePages) {
+
+            await this.writeFile(
+                servicesDirectory,
+                page.path.replace(
+                    "services/",
+                    ""
+                ),
+                page.content
+            );
+
+        }
 
         /*
          * Copy template CSS.
@@ -110,6 +139,22 @@ export default class ZipService {
             imagesDirectory,
             "about"
         );
+        for (
+            let index = 0;
+            index < (data.services || []).length;
+            index++
+        ) {
+
+            const service =
+                data.services[index];
+
+            await this.saveImage(
+                service.image,
+                servicesImagesDirectory,
+                `service-${index}`
+            );
+
+        }
 
         console.log(
             "Website saved successfully:",
@@ -203,7 +248,11 @@ export default class ZipService {
 
     }
 
-    async getWebsiteFiles(html, data) {
+    async getWebsiteFiles(
+    html,
+    data,
+    servicePages = []
+) {
 
         const files = [
             {
@@ -226,6 +275,9 @@ export default class ZipService {
                 encoding: "utf8"
             }
         ];
+        files.push(
+            ...servicePages
+        );
 
         const images = [
             {
@@ -250,6 +302,40 @@ export default class ZipService {
                 content:
                     await this.fileToBase64(image.file),
                 encoding: "base64"
+            });
+
+        }
+        for (
+            let index = 0;
+            index < (data.services || []).length;
+            index++
+        ) {
+
+            const service =
+                data.services[index];
+
+            if (!(service.image instanceof File)) {
+
+                continue;
+
+            }
+
+            files.push({
+
+                path:
+                    `assets/images/services/service-${index}` +
+                    this.getExtension(
+                        service.image.name
+                    ),
+
+                content:
+                    await this.fileToBase64(
+                        service.image
+                    ),
+
+                encoding:
+                    "base64"
+
             });
 
         }

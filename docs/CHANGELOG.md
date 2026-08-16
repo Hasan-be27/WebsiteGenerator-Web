@@ -256,3 +256,31 @@ The generated website renders correctly outside the generator.
 - Added deployment status handling on the Success page.
 - Added guidance for temporary GitHub Pages 404 delays.
 - Added download/export functionality to the Success page.
+
+## 2026-08-16
+
+### Changed
+
+- Expanded the Services component to support a service image, service name, brief description, and detailed description.
+- Made all four service fields mandatory for validation.
+- Added immediate image preview for uploaded service images.
+- Added generation of individual service pages for each service.
+- Added service image copying to `assets/images/services/` in generated websites.
+- Added service-specific image paths for generated service detail pages.
+- Added service-page links from the home page using the generated service index.
+
+### Fixed
+
+- Fixed the service template path mismatch that caused:
+  `Unable to load service template: templates/default/service.hbs`
+- The service template now resolves to `templates/default/services.hbs`.
+- Fixed Preview so uploaded service images are converted to temporary browser object URLs, allowing them to appear in preview.
+- Fixed service-page links to use Handlebars `@index`.
+
+### Verified
+
+- Services can contain images and both brief and detailed descriptions.
+- Service images appear in Preview.
+- Service detail pages can render their corresponding service image.
+- The existing production deployment flow remains unchanged.
+

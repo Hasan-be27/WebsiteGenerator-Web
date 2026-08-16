@@ -5,6 +5,9 @@ export default class TemplateService {
         this.templatePath =
             "templates/default/index.hbs";
 
+        this.serviceTemplatePath =
+            "templates/default/services.hbs";
+
         this.partialsPath =
             "templates/default/partials/";
 
@@ -90,6 +93,36 @@ export default class TemplateService {
             );
 
         }
+
+        const compiled =
+            Handlebars.compile(template);
+
+        return compiled(data);
+
+    }
+    async renderService(data) {
+
+        if (typeof Handlebars === "undefined") {
+
+            throw new Error(
+                "Handlebars is not available."
+            );
+
+        }
+
+        const response =
+            await fetch(this.serviceTemplatePath);
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Unable to load service template: ${this.serviceTemplatePath}`
+            );
+
+        }
+
+        const template =
+            await response.text();
 
         const compiled =
             Handlebars.compile(template);

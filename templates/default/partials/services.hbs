@@ -20,6 +20,15 @@
 
             <div class="service-card">
 
+                <div class="service-image-container">
+
+                    <img
+                        src="{{image}}"
+                        alt="{{name}}"
+                        class="service-image">
+
+                </div>
+
                 <div class="service-icon">
 
                     <i class="bi bi-briefcase-fill"></i>
@@ -31,8 +40,18 @@
                 </h4>
 
                 <p>
-                    {{description}}
+                    {{brief}}
                 </p>
+
+                <a
+                    href="services/service-{{@index}}.html"
+                    class="btn btn-primary service-link">
+
+                    Learn More
+
+                    <i class="bi bi-arrow-right ms-2"></i>
+
+                </a>
 
             </div>
 

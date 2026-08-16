@@ -62,6 +62,7 @@ export default class Services extends Component {
                 </h5>
 
                 <button
+                    type="button"
                     class="btn btn-outline-danger btn-sm remove-service">
 
                     Remove
@@ -73,8 +74,32 @@ export default class Services extends Component {
             <div class="mb-3">
 
                 <label class="form-label">
+                    <i class="bi bi-image me-2"></i>
+                    Service Image
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input
+                    type="file"
+                    class="form-control service-image"
+                    accept="image/*">
+
+                <div class="service-image-preview-container mt-3 d-none">
+
+                    <img
+                        class="service-image-preview"
+                        alt="Service image preview">
+
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
                     <i class="bi bi-tag me-2"></i>
                     Service Name
+                    <span class="text-danger">*</span>
                 </label>
 
                 <input
@@ -83,38 +108,106 @@ export default class Services extends Component {
 
             </div>
 
-            <div>
+            <div class="mb-3">
 
                 <label class="form-label">
                     <i class="bi bi-text-paragraph me-2"></i>
-                    Description
+                    Brief Description
+                    <span class="text-danger">*</span>
+                </label>
+
+                <textarea
+                    class="form-control service-brief"
+                    rows="2"
+                    placeholder="A short description shown on the home page."></textarea>
+
+            </div>
+
+            <div>
+
+                <label class="form-label">
+                    <i class="bi bi-file-text me-2"></i>
+                    Detailed Description
+                    <span class="text-danger">*</span>
                 </label>
 
                 <textarea
                     class="form-control service-description"
-                    rows="3"></textarea>
+                    rows="5"
+                    placeholder="A detailed description shown on the service page."></textarea>
 
             </div>
         `;
 
-        service.querySelector(".remove-service")
-            .addEventListener("click", () => {
+        const removeButton =
+            service.querySelector(".remove-service");
 
-                if (this.list.children.length === 1) {
+        removeButton.addEventListener("click", () => {
 
-                    return;
+            if (this.list.children.length === 1) {
 
-                }
+                return;
 
-                service.remove();
+            }
 
-                this.renumber();
+            service.remove();
 
-            });
-        const nameInput = service.querySelector(".service-name");
-        const descriptionInput = service.querySelector(".service-description");
+            this.renumber();
+
+            this.validationService.validate("services");
+
+        });
+
+        const imageInput =
+            service.querySelector(".service-image");
+
+        const imagePreviewContainer =
+            service.querySelector(".service-image-preview-container");
+
+        const imagePreview =
+            service.querySelector(".service-image-preview");
+
+        const nameInput =
+            service.querySelector(".service-name");
+
+        const briefInput =
+            service.querySelector(".service-brief");
+
+        const descriptionInput =
+            service.querySelector(".service-description");
+
+        imageInput.addEventListener("change", () => {
+
+            const file = imageInput.files[0];
+
+            if (!file) {
+
+                imagePreviewContainer.classList.add("d-none");
+
+                imagePreview.removeAttribute("src");
+
+                this.validationService.validate("services");
+
+                return;
+
+            }
+
+            imagePreview.src =
+                URL.createObjectURL(file);
+
+            imagePreviewContainer.classList.remove("d-none");
+
+            this.validationService.validate("services");
+
+        });
 
         nameInput.addEventListener("input", () => {
+
+            this.validationService.validate("services");
+
+        });
+
+        briefInput.addEventListener("input", () => {
 
             this.validationService.validate("services");
 
@@ -138,15 +231,26 @@ export default class Services extends Component {
 
         }
 
-        return [...this.list.children].some(service => {
+        return [...this.list.children].every(service => {
+
+            const image =
+                service.querySelector(".service-image").files[0];
 
             const name =
                 service.querySelector(".service-name").value.trim();
 
+            const brief =
+                service.querySelector(".service-brief").value.trim();
+
             const description =
                 service.querySelector(".service-description").value.trim();
 
-            return name !== "" && description !== "";
+            return Boolean(
+                image &&
+                name &&
+                brief &&
+                description
+            );
 
         });
 
@@ -156,9 +260,28 @@ export default class Services extends Component {
 
         return [...this.list.children].map(service => ({
 
-            name: service.querySelector(".service-name").value.trim(),
+            name:
+                service
+                    .querySelector(".service-name")
+                    .value
+                    .trim(),
 
-            description: service.querySelector(".service-description").value.trim()
+            brief:
+                service
+                    .querySelector(".service-brief")
+                    .value
+                    .trim(),
+
+            description:
+                service
+                    .querySelector(".service-description")
+                    .value
+                    .trim(),
+
+            image:
+                service
+                    .querySelector(".service-image")
+                    .files[0] || null
 
         }));
 
